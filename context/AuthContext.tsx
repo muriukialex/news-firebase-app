@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation"
 import { signOutUser } from "@/lib/firebase/firestore/firestore"
 
 type UserState = {
-    user: User | null,
+    user: User | null
     isLoggedIn: boolean
 }
 
 type ContextProps = {
-  user: UserState
-  setUser: Dispatch<SetStateAction<UserState>>
+  user: UserState | null
+  setUser: Dispatch<SetStateAction<UserState | null>>
   handleSignOut: () => void
 }
 
@@ -25,20 +25,26 @@ const initialState = {
 }
 const setUserInLocalStorage = ({user, isLoggedIn}: {user: User | null, isLoggedIn: boolean}) => {
   const userData = {user, isLoggedIn}
-  localStorage.setItem("user", JSON.stringify(userData))
+  if (typeof window !== "undefined") {
+    // client
+    localStorage.setItem("user", JSON.stringify(userData))
+  }
 }
 
 
-const getUserFromLocalStorage = (): UserState => {
-  const storedUser = localStorage.getItem("user")
-  return storedUser ? JSON.parse(storedUser) : initialState
+const getUserFromLocalStorage = (): UserState | null => {
+  if (typeof window !== "undefined") {
+    const storedUser = localStorage.getItem("user")
+    return storedUser ? JSON.parse(storedUser) : initialState
+  }
+  return null
 }
 
 
 const AuthProvider = ({ children }: {children: ReactNode}) =>{
   const { push } = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
-  const [user, setUser] = useState<UserState>(getUserFromLocalStorage)
+  const [user, setUser] = useState<UserState | null>(getUserFromLocalStorage)
 
   const handleSignOut = () =>{
     signOutUser()
@@ -55,13 +61,13 @@ const AuthProvider = ({ children }: {children: ReactNode}) =>{
   },[])
 
   useLayoutEffect(() =>{
-    if(user.isLoggedIn){
+    if(user?.isLoggedIn){
       push("/home")
     } else{
       push("/")
     }
     
-  }, [push, user.isLoggedIn])
+  }, [push, user?.isLoggedIn])
 
   const contextValue = {
     user,
