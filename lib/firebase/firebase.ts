@@ -13,7 +13,7 @@ export const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-// required dur to serverside nextjs rendering
+// required during serverside nextjs rendering
 export const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
 
 export const auth = getAuth(firebaseApp)

@@ -1,7 +1,7 @@
 import { addDoc, collection, getDocs, query } from "firebase/firestore"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { db, auth } from "../firebase"
-import type { ArticleDataType, UserDataType, SignInSignUpErrorResponse } from "@/types"
+import type { NewsArticlesData, UserDataType, SignInSignUpErrorResponse } from "@/types"
 
 export const signUpUser = async (data: UserDataType): Promise<SignInSignUpErrorResponse> => {
   try {
@@ -41,7 +41,7 @@ export const signOutUser = async () =>{
   return await signOut(auth)
 }
 
-export const addNewsArticleToFavourites = async (data: ArticleDataType) => {
+export const addNewsArticleToFavourites = async (data: NewsArticlesData) => {
   if(data === undefined){
     throw new Error("KIndly include news articles data")
   }
