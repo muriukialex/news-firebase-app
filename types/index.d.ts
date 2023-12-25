@@ -13,24 +13,30 @@ export type SignInSignUpErrorResponse = { user: UserCredential } | {
     errorMessage: string
 }
 
+export interface NewsAPIErrorResponse {
+    status: string
+    code: string
+    message: string
+}
+
 export interface NewsArticlesData {
-    "source": {
-        "id": string | null,
-        "name": string
+    source: {
+        id: string | null,
+        name: string
     },
-    "author": string
-    "title": string
-    "description": string
-    "url": string
-    "urlToImage": string
-    "publishedAt": string
-    "content": string
+    author: string
+    title: string
+    description: string
+    url: string
+    urlToImage: string
+    publishedAt: string
+    content: string
 }
 
 export interface NewsArticlesDataAPIResults {
     data:{
-        "status": string
-        "totalResults": number
-        "articles": Array<NewsArticlesData>
+        status: string
+        totalResults: number
+        articles: Array<NewsArticlesData>
     }
 }

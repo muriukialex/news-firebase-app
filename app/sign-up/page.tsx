@@ -54,7 +54,7 @@ const SignUpPage = () => {
       <header>
             Sign Up 
       </header>
-      <form className="w-1/2" onSubmit={handleSubmit(handleUserSignUpForm)}>
+      <form className="w-4/5 md:w-1/3 mb-60" onSubmit={handleSubmit(handleUserSignUpForm)}>
         <div className="flex flex-col mb-3">
           <label htmlFor="email">Enter Email</label>
           <input 
